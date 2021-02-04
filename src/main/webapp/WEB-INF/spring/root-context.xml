@@ -15,7 +15,7 @@
 		<property name="driverClassName"
 			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<property name="jdbcUrl"
-			value="jdbc:log4jdbc:oracle:thin:@db202102041133_high?TNS_ADMIN=/Users/haein/home/opc/walletTeam"></property>
+			value="jdbc:log4jdbc:oracle:thin:@db202102041133_high?TNS_ADMIN=/home/opc/walletTeam"></property>
 		<!-- export시 /Users/haein 지울 것 -->
 		<property name="username" value="admin"></property>
 		<property name="password" value="501teamprojectA"></property>
