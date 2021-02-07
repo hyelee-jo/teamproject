@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.TreviewMapper">
+
+
+
+	<select id="selectTreviewList" parameterType="org.zerock.domain.TreviewVO" resultType="org.zerock.domain.TreviewVO">
+		/* TreviewMapper.xml id="selectTreviewList" */
+		SELECT
+			X.RNUM
+			, TRUNC((X.RNUM - 1) / #{rows}, 0) + 1 AS PAGE
+			, #{rows} AS "rows"
+			, #{page_rows} AS "page_rows"
+			, X.CNT_TOTAL
+			, TRUNC(X.CNT_TOTAL / #{rows}, 0) + 1 AS CNT_PAGE
+			, TRUNC(TRUNC((X.RNUM - 1) / #{rows}, 0) / #{page_rows}, 0) * #{page_rows} + 1 AS START_PAGE
+			, RB.*
+			, TO_CHAR(RB.REVIEWDATE, 'YYYY-MM-DD HH24:MI:SS') AS REVIEWDATESTR
+			, (SELECT COUNT(*) FROM REVIEW_REPLY WHERE REVIEWNO = RB.REVIEWNO) AS CNT_REPLY
+		FROM
+			(SELECT
+					ROW_NUMBER() OVER(ORDER BY RB.REVIEWNO DESC) AS RNUM
+					, COUNT(*) OVER() AS CNT_TOTAL
+					, RB.REVIEWNO
+				FROM REVIEW_BOARD RB
+			) X
+			INNER JOIN REVIEW_BOARD RB
+				ON RB.REVIEWNO = X.REVIEWNO
+		WHERE
+			X.RNUM BETWEEN (#{rows} * (#{page} - 1)) + 1 AND (#{rows} * (#{page} - 0))
+		ORDER BY X.RNUM ASC
+	</select>
+
+
+	<update id="updateTreview" parameterType="org.zerock.domain.TreviewVO">
+		/* TreviewMapper.xml id="updateTreview" */
+		UPDATE REVIEW_BOARD
+		SET
+			REVIEWTITLE = #{reviewtitle}
+			, REVIEWCONTENT = #{reviewcontent}
+			, ORDERNO = #{orderno}
+			<if test="img_path != null">
+				, IMG_PATH = #{img_path}
+			</if>
+		WHERE
+			REVIEWNO = #{reviewno}
+	</update>
+
+
+	<select id="selectMaxKey" resultType="int">
+		/* TreviewMapper.xml id="selectMaxKey" */
+		SELECT
+			NVL(MAX(REVIEWNO), 0) + 1 AS "KEY"
+		FROM REVIEW_BOARD
+	</select>
+
+
+	<insert id="insertTreview" parameterType="org.zerock.domain.TreviewVO">
+		/* TreviewMapper.xml id="insertTreview" */
+		INSERT INTO REVIEW_BOARD
+			(REVIEWNO, REVIEWTITLE, REVIEWCONTENT, REVIEWDATE, ID, ORDERNO, IMG_PATH)
+		VALUES
+			(#{reviewno}
+				, #{reviewtitle}
+				, #{reviewcontent}
+				, SYSDATE
+				, (SELECT ID FROM MEMBER WHERE ROWNUM = 1)
+				, #{orderno}
+				, #{img_path}
+			)
+	</insert>
+
+
+	<select id="selectOrderList" resultType="org.zerock.domain.TreviewVO">
+		/* TreviewMapper.xml id="selectOrderList" */
+		SELECT
+			PD.PRODUCTNO
+			, PD.PRODUCTNAME
+			, PD.PRODUCTPRICE
+			, PD.SCHEDULE
+			/*, TO_CHAR(PD.SCHEDULE, 'YYYY-MM-DD') AS SCHEDULESTR*/
+			, PD.CITY
+			, PD.COUNTRY
+			, OP.ORDERNO
+			, OP.ORDERDATE
+			/*, TO_CHAR(OP.ORDERDATE, 'YYYY-MM-DD') AS ORDERDATESTR*/
+			, OP.QUANTITY
+		FROM PRODUCT PD
+			INNER JOIN ORDER_PRODUCT OP
+				ON OP.PRODUCTNO = PD.PRODUCTNO
+		ORDER BY PD.PRODUCTNO DESC
+	</select>
+
+
+	<select id="selectTreview" resultType="org.zerock.domain.TreviewVO">
+		/* TreviewMapper.xml id="selectTreview" */
+		SELECT
+			RB.*
+			, TO_CHAR(RB.REVIEWDATE, 'YYYY-MM-DD HH24:MI:SS') AS REVIEWDATESTR
+			, (SELECT COUNT(*) FROM REVIEW_REPLY WHERE REVIEWNO = RB.REVIEWNO) AS CNT_REPLY
+		FROM REVIEW_BOARD RB
+		WHERE
+			RB.REVIEWNO = #{reviewno}
+	</select>
+
+
+	<select id="selectTreviewReplyList" parameterType="org.zerock.domain.TreviewVO" resultType="org.zerock.domain.TreviewVO">
+		/* TreviewMapper.xml id="selectTreviewReplyList" */
+		SELECT
+			X.RNUM
+			, TRUNC((X.RNUM - 1) / #{rows}, 0) + 1 AS PAGE
+			, #{rows} AS "rows"
+			, #{page_rows} AS "page_rows"
+			, X.CNT_TOTAL
+			, TRUNC(X.CNT_TOTAL / #{rows}, 0) + 1 AS CNT_PAGE
+			, TRUNC(TRUNC((X.RNUM - 1) / #{rows}, 0) / #{page_rows}, 0) * #{page_rows} + 1 AS START_PAGE
+			, RR.*
+			, TO_CHAR(RR.CREATED_DT, 'YYYY-MM-DD HH24:MI:SS') AS CREATED_DT_STR
+		FROM
+			(SELECT
+					ROW_NUMBER() OVER(ORDER BY RR.REPLYNO DESC) AS RNUM
+					, COUNT(*) OVER() AS CNT_TOTAL
+					, RR.REPLYNO
+				FROM REVIEW_REPLY RR
+				WHERE
+					RR.REVIEWNO = #{reviewno}
+			) X
+			INNER JOIN REVIEW_REPLY RR
+				ON RR.REPLYNO = X.REPLYNO
+		WHERE
+			X.RNUM BETWEEN (#{rows} * (#{page} - 1)) + 1 AND (#{rows} * (#{page} - 0))
+		ORDER BY X.RNUM ASC
+	</select>
+
+
+	<insert id="insertTreviewReply" parameterType="org.zerock.domain.TreviewVO">
+		/* TreviewMapper.xml id="insertTreviewReply" */
+		INSERT INTO REVIEW_REPLY
+			(REPLYNO, REPLIER, REPLY, REVIEWNO, CREATED_DT)
+		VALUES
+			((SELECT NVL(MAX(REPLYNO), 0) + 1 FROM REVIEW_REPLY)
+				, (SELECT ID FROM MEMBER WHERE ROWNUM = 1)
+				, #{reply}
+				, #{reviewno}
+				, SYSDATE
+			)
+	</insert>
+
+
+	<delete id="deleteTreviewReply" parameterType="org.zerock.domain.TreviewVO">
+		/* TreviewMapper.xml id="deleteTreviewReply" */
+		DELETE FROM REVIEW_REPLY
+		WHERE
+			REPLYNO = #{replyno}
+	</delete>
+
+
+	<delete id="deleteTreviewReplyAll" parameterType="org.zerock.domain.TreviewVO">
+		/* TreviewMapper.xml id="deleteTreviewReplyAll" */
+		DELETE FROM REVIEW_REPLY
+		WHERE
+			REVIEWNO = #{reviewno}
+	</delete>
+
+
+	<delete id="deleteTreview" parameterType="org.zerock.domain.TreviewVO">
+		/* TreviewMapper.xml id="deleteTreview" */
+		DELETE FROM REVIEW_BOARD
+		WHERE
+			REVIEWNO = #{reviewno}
+	</delete>
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
