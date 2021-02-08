@@ -25,6 +25,8 @@ public class TreviewServiceImpl implements TreviewService {
 	public void saveTreview(TreviewVO params) {
 		if (params.getReviewno() == 0) {
 			params.setReviewno(treviewMapper.selectMaxKey());
+			
+			log.info(params);
 			treviewMapper.insertTreview(params);
 		} else {
 			treviewMapper.updateTreview(params);

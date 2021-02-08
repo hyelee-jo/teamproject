@@ -102,6 +102,8 @@ public class TreviewController {
 			String fullDir = imagePath + "/" + UUID.randomUUID() + "." + ext;
 			params.setImg_path(fullDir);
 			imageFile.transferTo(new File(fullDir));
+		} else {
+			params.setImg_path("");
 		}
 
 		log.info("[/treview/writeSave] 여행후기 등록/수정 :: params >> " + ToStringBuilder.reflectionToString(params));
@@ -110,7 +112,7 @@ public class TreviewController {
 		if (params.getReviewno() != 0) {
 			msg = "update";
 		}
-
+		
 		treviewService.saveTreview(params);
 
 		model.addAttribute("message", msg);
