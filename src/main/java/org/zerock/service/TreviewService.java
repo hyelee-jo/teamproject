@@ -24,4 +24,6 @@ public interface TreviewService {
 
 	public void deleteTreview(TreviewVO params);
 
+	public TreviewVO selectTreviewByKey(TreviewVO treview);
+
 }

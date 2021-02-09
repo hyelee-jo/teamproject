@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<% pageContext.setAttribute("newLineChar", "\n"); %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +59,7 @@
               </div>
               <div class="clearfix">
               </div>
-              <img src="dd" alt="" onError="this.onerror=null;$(this).hide();" style="width: 100%;" />
+              <img class="resizeImgTarget" src="/treview/download/${treview.img_key}" alt="" onError="this.onerror=null;$(this).hide();" style="width: 100%;" onload="resizeImgOnload(this);" />
               <ul class="post-meta">
                 <li class="first"><i class="icon-calendar"></i><span>${treview.reviewdatestr}</span></li>
                 <li><i class="icon-comments"></i><span><a href="#">${treview.cnt_reply} comments</a></span></li>
@@ -66,28 +67,32 @@
               </ul>
               <div class="clearfix">
               </div>
-              <p>${treview.reviewcontent}</p>
+              <p>${fn:replace(treview.reviewcontent, newLineChar, "<br>")}</p>
+              
               <button class="btn btn-theme" type="button" onclick="javascript: location.href='/treview/write?key=${treview.reviewno}';">여행후기 수정하기</button>
               <button class="btn btn-theme" type="button" onclick="javascript: deleteTreview();">삭제하기</button>
             </article>
-            <h4>댓글목록</h4>
-            <ul class="media-list">
-              <c:forEach items="${replyList}" var="reply">
-	              <li class="media">
-	                <a class="pull-left" href="#">
-						<img class="media-object" src="/resources/treview/assets/img/small-avatar.png" alt="" />
-						</a>
-	                <div class="media-body">
-	                  <h5 class="media-heading"><a href="#">${reply.replier}</a></h5>
-	                  <span>${reply.created_dt_str}</span>
-	                  <p>${reply.reply}</p>
-	                  <a href="javascript: deleteComment('${reply.replyno}');" class="reply">삭제</a>
-	                  <div class="clearfix">
-	                  </div>
-	                </div>
-	              </li>
-              </c:forEach>
-            </ul>
+            <c:if test="${fn:length(replyList) > 0}">
+	            <h4>댓글목록</h4>
+	            <ul class="media-list">
+	              <c:forEach items="${replyList}" var="reply" varStatus="replySt">
+		              <li class="media">
+		                <a class="pull-left" href="#">
+							<img class="media-object" src="/resources/treview/assets/img/small-avatar.png" alt="" />
+							</a>
+		                <div class="media-body">
+		                  <h5 class="media-heading"><a href="#">${reply.replier}</a></h5>
+		                  <span>${reply.created_dt_str}</span>
+		                  <p>${fn:replace(reply.reply, newLineChar, "<br>")}</p>
+		                  <a href="javascript: deleteComment('${reply.replyno}');" class="reply">삭제</a>
+		                  <a href="javascript: modifyComment('${reply.replyno}', '${replySt.index}');" class="reply" style="margin-right: 1em;">수정</a>
+		                  <div class="clearfix"></div>
+		                  <input type="hidden" id="replyArea${replySt.index}" value="${reply.reply}">
+		                </div>
+		              </li>
+	              </c:forEach>
+	            </ul>
+            </c:if>
             <c:if test="${fn:length(replyList) > 0}">
 	            <div class="row">
 		          <div class="span12">
@@ -115,6 +120,7 @@
               <h4>댓글작성</h4>
               <form action="/treview/commentSave" id="params" name="params" method="post" class="comment-form" name="comment-form">
                 <input type="hidden" id="reviewno" name="reviewno" value="${treview.reviewno}">
+                <input type="hidden" id="replyno" name="replyno" value="">
                 <div class="row">
                   <div class="span8">
                     <label>댓글 <span>*</span></label>
@@ -161,12 +167,47 @@
   		}
   	}
   	
+  	function modifyComment(key, idx) {
+  		$("#params").find("#replyno").val(key);
+  		$("#params").find("#reply").val($("#replyArea" + $.trim(idx)).val());
+  		
+  		var offset = $(".comment-post").offset();
+        $('html, body').animate({scrollTop : offset.top}, 400);
+        $("#params").find("#reply").focus();
+  	}
+  	
   	function deleteTreview() {
   		if (confirm("여행후기를 삭제하시겠습니까?")) {
   			$("#delete").find("#type").val("treview");
   			$("#delete").submit();
   		}
   	}
+  	
+  	function resizeImgOnload($this) {
+  		var $width;
+  		var $height;
+		$width = $($this).width();
+		$height = $($this).height();
+		if ($width <= $height) {
+	  		$($this).css("height", $width);
+	  	}
+  	}
+  	
+  	function resizeImg() {
+  		var $width;
+  		var $height;
+  		$(".resizeImgTarget").each(function() {
+  			$width = $(this).width();
+  			$height = $(this).height();
+  			if ($width <= $height) {
+  	  			$(this).css("height", $width);
+  	  		}
+  		});
+  	}
+  	
+  	$(window).resize(function() {
+  		resizeImg();
+  	});
   </script>
 
 </body>

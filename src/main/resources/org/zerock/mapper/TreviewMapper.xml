@@ -44,6 +44,12 @@
 			<if test="img_path != null">
 				, IMG_PATH = #{img_path}
 			</if>
+			<if test="img_key != null">
+				, IMG_KEY = #{img_key}
+			</if>
+			<if test="img_name != null">
+				, IMG_NAME = #{img_name}
+			</if>
 		WHERE
 			REVIEWNO = #{reviewno}
 	</update>
@@ -60,7 +66,7 @@
 	<insert id="insertTreview" parameterType="org.zerock.domain.TreviewVO">
 		/* TreviewMapper.xml id="insertTreview" */
 		INSERT INTO REVIEW_BOARD
-			(REVIEWNO, REVIEWTITLE, REVIEWCONTENT, REVIEWDATE, ID, ORDERNO, IMG_PATH)
+			(REVIEWNO, REVIEWTITLE, REVIEWCONTENT, REVIEWDATE, ID, ORDERNO, IMG_PATH, IMG_KEY, IMG_NAME)
 		VALUES
 			(#{reviewno}
 				, #{reviewtitle}
@@ -69,6 +75,8 @@
 				, (SELECT ID FROM MEMBER WHERE ROWNUM = 1)
 				, #{orderno}
 				, #{img_path}
+				, #{img_key}
+				, #{img_name}
 			)
 	</insert>
 
@@ -149,6 +157,16 @@
 	</insert>
 
 
+	<update id="updateTreviewReply" parameterType="org.zerock.domain.TreviewVO">
+		/* TreviewMapper.xml id="insertTreviewReply" */
+		UPDATE REVIEW_REPLY
+		SET
+			REPLY = #{reply}
+		WHERE
+			REPLYNO = #{replyno}
+	</update>
+
+
 	<delete id="deleteTreviewReply" parameterType="org.zerock.domain.TreviewVO">
 		/* TreviewMapper.xml id="deleteTreviewReply" */
 		DELETE FROM REVIEW_REPLY
@@ -171,6 +189,18 @@
 		WHERE
 			REVIEWNO = #{reviewno}
 	</delete>
+
+
+	<select id="selectTreviewByKey" resultType="org.zerock.domain.TreviewVO">
+		/* TreviewMapper.xml id="selectTreviewByKey" */
+		SELECT
+			RB.*
+			, TO_CHAR(RB.REVIEWDATE, 'YYYY-MM-DD HH24:MI:SS') AS REVIEWDATESTR
+			, (SELECT COUNT(*) FROM REVIEW_REPLY WHERE REVIEWNO = RB.REVIEWNO) AS CNT_REPLY
+		FROM REVIEW_BOARD RB
+		WHERE
+			RB.IMG_KEY = #{img_key}
+	</select>
 
 
 

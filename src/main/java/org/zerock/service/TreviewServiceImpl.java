@@ -23,13 +23,11 @@ public class TreviewServiceImpl implements TreviewService {
 
 	@Override
 	public void saveTreview(TreviewVO params) {
-		if (params.getReviewno() == 0) {
-			params.setReviewno(treviewMapper.selectMaxKey());
-			
-			log.info(params);
-			treviewMapper.insertTreview(params);
-		} else {
+		if (params.getReviewno() != null && params.getReviewno() > 0) {
 			treviewMapper.updateTreview(params);
+		} else {
+			params.setReviewno(treviewMapper.selectMaxKey());
+			treviewMapper.insertTreview(params);
 		}
 	}
 
@@ -50,7 +48,11 @@ public class TreviewServiceImpl implements TreviewService {
 
 	@Override
 	public void saveTreviewReply(TreviewVO params) {
-		treviewMapper.insertTreviewReply(params);
+		if (params.getReplyno() != null && params.getReplyno() > 0) {
+			treviewMapper.updateTreviewReply(params);			
+		} else {
+			treviewMapper.insertTreviewReply(params);
+		}
 	}
 
 	@Override
@@ -66,6 +68,11 @@ public class TreviewServiceImpl implements TreviewService {
 	@Override
 	public void deleteTreview(TreviewVO params) {
 		treviewMapper.deleteTreview(params);
+	}
+
+	@Override
+	public TreviewVO selectTreviewByKey(TreviewVO treview) {
+		return treviewMapper.selectTreviewByKey(treview);
 	}
 
 }

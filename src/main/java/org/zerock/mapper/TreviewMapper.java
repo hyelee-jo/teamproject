@@ -28,4 +28,8 @@ public interface TreviewMapper {
 
 	public void deleteTreview(TreviewVO params);
 
+	public TreviewVO selectTreviewByKey(TreviewVO treview);
+
+	public void updateTreviewReply(TreviewVO params);
+
 }

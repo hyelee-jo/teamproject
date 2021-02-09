@@ -59,7 +59,7 @@
 	              <div class="span3">
 	                <div class="thumbnail">
 	                  <div class="image-wrapp">
-	                    <img src="aaa" alt="Portfolio name" title="" class="location${treview.reviewno}" onError="this.onerror=null;this.src='/resources/treview/assets/img/noimage.gif'" />
+	                    <img class="listImgTag" src="/treview/download/${treview.img_key}" alt="Portfolio name" title="" class="location${treview.reviewno}" onError="this.onerror=null;this.src='/resources/treview/assets/img/noimage.gif'" onload="resizeImgOnload(this);" />
 	                    <article class="da-animate da-slideFromRight">
 	                      <a class="zoom" data-pretty="" href="javascript: detailImageView('${treview.reviewno}');">
 								<i class="icon-zoom-in icon-rounded icon-48 active"></i>
@@ -73,7 +73,7 @@
 	                <div class="thumbnailDesc">
 	                	<div class="title" data-key="${treview.reviewno}">[${treview.reviewno}] ${treview.reviewtitle}</div>
 	                	<div class="content" data-key="${treview.reviewno}">[요약]<br>${treview.reviewcontent}</div>
-	                	<ul class="post-meta">
+	                	<ul class="post-meta" data-key="${treview.reviewno}">
 			              <li class="first"><i class="icon-calendar"></i><span>${treview.reviewdatestr}</span></li>
 			              <li><i class="icon-comments"></i><span><a href="#">${treview.cnt_reply} comments</a></span></li>
 			              <li class="last"><i class="icon-tags"></i><span><a href="#">${treview.id}</a></span></li>
@@ -128,11 +128,37 @@
   		location.href = "/treview/view?key=" + rnum;
   	}
   	
-  	$(".thumbnailDesc").find(".title, .content").click(function(e) {
+  	$(".thumbnailDesc").find(".title, .content, .post-meta").click(function(e) {
   		e.preventDefault();
   		
   		var $key = $(this).attr("data-key");
   		location.href = "/treview/view?key=" + $key;
+  	});
+  	
+  	function resizeImgOnload($this) {
+  		var $width;
+  		var $height;
+		$width = $($this).width();
+		$height = $($this).height();
+		if ($width <= $height) {
+	  		$($this).css("height", $width);
+	  	}
+  	}
+  	
+  	function resizeImg() {
+  		var $width;
+  		var $height;
+  		$(".resizeImgTarget").each(function() {
+  			$width = $(this).width();
+  			$height = $(this).height();
+  			if ($width <= $height) {
+  	  			$(this).css("height", $width);
+  	  		}
+  		});
+  	}
+  	
+  	$(window).resize(function() {
+  		resizeImg();
   	});
   </script>
 

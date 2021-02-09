@@ -26,6 +26,8 @@ public class TreviewVO {
 	private String id;
 	private Integer cnt_reply;
 	private String img_path;
+	private String img_key;
+	private String img_name;
 
 	private Integer replyno;
 	private String replier;

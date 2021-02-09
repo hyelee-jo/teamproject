@@ -1,7 +1,9 @@
 package org.zerock.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -99,20 +102,24 @@ public class TreviewController {
 			if (!new File(imagePath).exists()) {
 				new File(imagePath).mkdirs();
 			}
-			String fullDir = imagePath + "/" + UUID.randomUUID() + "." + ext;
+			String uuid = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+			String fullDir = imagePath + "/" + uuid + "." + ext;
 			params.setImg_path(fullDir);
+			params.setImg_key(uuid);
+			params.setImg_name(uuid + "." + ext);
 			imageFile.transferTo(new File(fullDir));
 		} else {
 			params.setImg_path("");
+			params.setImg_key("");
 		}
 
 		log.info("[/treview/writeSave] 여행후기 등록/수정 :: params >> " + ToStringBuilder.reflectionToString(params));
 
 		String msg = "insert";
-		if (params.getReviewno() != 0) {
+		if (params.getReviewno() != null && params.getReviewno() > 0) {
 			msg = "update";
 		}
-		
+
 		treviewService.saveTreview(params);
 
 		model.addAttribute("message", msg);
@@ -215,6 +222,44 @@ public class TreviewController {
 		}
 
 		model.addAttribute("params", params);
+
+	}
+
+	@GetMapping(path = "/download/{key}")
+	public void fileDownload(@PathVariable(name = "key") String key, HttpServletResponse response) {
+
+		TreviewVO treview = new TreviewVO();
+		treview.setImg_key(key);
+		treview = treviewService.selectTreviewByKey(treview);
+
+		String fileName = treview.getImg_name();
+		String saveFileName = treview.getImg_path();
+		// String contentType = treview.getContentType();
+
+		File file = new File(saveFileName);
+		long fileLength = file.length();
+
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");
+		response.setHeader("Content-Transfer-Encoding", "binary");
+		// response.setHeader("Content-Type", contentType);
+		response.setHeader("Content-Length", "" + fileLength);
+		response.setHeader("Pragma", "no-cache;");
+		response.setHeader("Expires", "-1;");
+		// 그 정보들을 가지고 reponse의 Header에 세팅한 후
+
+		try (FileInputStream fis = new FileInputStream(saveFileName); OutputStream out = response.getOutputStream();) {
+			// saveFileName을 파라미터로 넣어 inputStream 객체를 만들고
+			// response에서 파일을 내보낼 OutputStream을 가져와서
+			int readCount = 0;
+			byte[] buffer = new byte[1024];
+			// 파일 읽을 만큼 크기의 buffer를 생성한 후
+			while ((readCount = fis.read(buffer)) != -1) {
+				out.write(buffer, 0, readCount);
+				// outputStream에 씌워준다
+			}
+		} catch (Exception ex) {
+			throw new RuntimeException("file Load Error");
+		}
 
 	}
 
