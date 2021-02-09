@@ -66,7 +66,22 @@
 	<insert id="insertTreview" parameterType="org.zerock.domain.TreviewVO">
 		/* TreviewMapper.xml id="insertTreview" */
 		INSERT INTO REVIEW_BOARD
-			(REVIEWNO, REVIEWTITLE, REVIEWCONTENT, REVIEWDATE, ID, ORDERNO, IMG_PATH, IMG_KEY, IMG_NAME)
+			(REVIEWNO
+				, REVIEWTITLE
+				, REVIEWCONTENT
+				, REVIEWDATE
+				, ID
+				, ORDERNO
+				<if test="img_path != null">
+					, IMG_PATH
+				</if>
+				<if test="img_key != null">
+					, IMG_KEY
+				</if>
+				<if test="img_name != null">
+					, IMG_NAME
+				</if>
+			)
 		VALUES
 			(#{reviewno}
 				, #{reviewtitle}
@@ -74,9 +89,15 @@
 				, SYSDATE
 				, (SELECT ID FROM MEMBER WHERE ROWNUM = 1)
 				, #{orderno}
-				, #{img_path}
-				, #{img_key}
-				, #{img_name}
+				<if test="img_path != null">
+					, #{img_path}
+				</if>
+				<if test="img_key != null">
+					, #{img_key}
+				</if>
+				<if test="img_name != null">
+					, #{img_name}
+				</if>
 			)
 	</insert>
 

@@ -108,9 +108,6 @@ public class TreviewController {
 			params.setImg_key(uuid);
 			params.setImg_name(uuid + "." + ext);
 			imageFile.transferTo(new File(fullDir));
-		} else {
-			params.setImg_path("");
-			params.setImg_key("");
 		}
 
 		log.info("[/treview/writeSave] 여행후기 등록/수정 :: params >> " + ToStringBuilder.reflectionToString(params));
