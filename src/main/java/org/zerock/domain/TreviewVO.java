@@ -21,6 +21,7 @@ public class TreviewVO {
 	private Integer reviewno;
 	private String reviewtitle;
 	private String reviewcontent;
+	private String reviewcontentshort;
 	private Date reviewdate;
 	private String reviewdatestr;
 	private String id;

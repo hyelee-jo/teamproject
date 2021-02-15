@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+.d-line-block {
+  display: inline-block;
+}
+
+.white {
+  background-color: #fff;
+  color: #666d75;
+}
+
+.logo-container > a {
+  display: inline-block;
+}
+
+.logo-container .logo-img {
+  width: 128px;
+}
+
+.logo-container img {
+  vertical-align: middle;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  margin: 0 12px;
+  background: #e9ecef;
+}
+
+.button-module {
+  border: 0;
+  padding: 0;
+  position: relative;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0);
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}

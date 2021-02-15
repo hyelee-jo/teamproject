@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Enumeration;
+import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -29,9 +28,9 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/treview/*")
+@RequestMapping("/treview/inner/*")
 @Log4j
-public class TreviewController {
+public class TreviewInnerController {
 
 	private TreviewService treviewService;
 
@@ -44,8 +43,18 @@ public class TreviewController {
 	 * @param model
 	 */
 	@GetMapping("/list")
-	public void list(@ModelAttribute("params") TreviewVO params, Model model, HttpServletRequest request) {
-		this.getParamSet(request, model);
+	public void list(@ModelAttribute("params") TreviewVO params, Model model) {
+
+		log.info("[/treview/list] 여행후기 목록 :: params >> " + ToStringBuilder.reflectionToString(params));
+
+		if (params.getPage() == null || params.getPage() < 1) {
+			params.setPage(1);
+		}
+		params.setRows(10);
+		params.setPage_rows(5);
+		List<TreviewVO> treviewList = treviewService.selectTreviewList(params);
+		model.addAttribute("treviewList", treviewList);
+
 	}
 
 	/**
@@ -54,8 +63,19 @@ public class TreviewController {
 	 * @param params
 	 */
 	@GetMapping("/write")
-	public void write(@ModelAttribute("params") TreviewVO params, Model model, HttpServletRequest request) {
-		this.getParamSet(request, model);
+	public void write(@ModelAttribute("params") TreviewVO params, Model model) {
+
+		log.info("[/treview/write] 여행후기 등록/수정 :: params >> " + ToStringBuilder.reflectionToString(params));
+
+		if (params.getKey() != null) {
+			params.setReviewno(Integer.parseInt(params.getKey()));
+			TreviewVO treview = treviewService.selectTreview(params);
+			model.addAttribute("treview", treview);
+		}
+
+		List<TreviewVO> orderlist = treviewService.selectOrderList();
+		model.addAttribute("orderlist", orderlist);
+
 	}
 
 	/**
@@ -113,8 +133,23 @@ public class TreviewController {
 	 * @param model
 	 */
 	@GetMapping("/view")
-	public void view(@ModelAttribute("params") TreviewVO params, Model model, HttpServletRequest request) {
-		this.getParamSet(request, model);
+	public void view(@ModelAttribute("params") TreviewVO params, Model model) {
+
+		log.info("[/treview/view] 여행후기 상세보기 :: params >> " + ToStringBuilder.reflectionToString(params));
+
+		params.setReviewno(Integer.parseInt(params.getKey()));
+		TreviewVO treview = treviewService.selectTreview(params);
+
+		if (params.getPage() == null || params.getPage() < 1) {
+			params.setPage(1);
+		}
+		params.setRows(5);
+		params.setPage_rows(5);
+		List<TreviewVO> replyList = treviewService.selectTreviewReplyList(params);
+
+		model.addAttribute("treview", treview);
+		model.addAttribute("replyList", replyList);
+
 	}
 
 	/**
@@ -222,23 +257,6 @@ public class TreviewController {
 		} catch (Exception ex) {
 			throw new RuntimeException("file Load Error");
 		}
-
-	}
-
-	private void getParamSet(HttpServletRequest request, Model model) {
-		String getParamSet = null;
-		Enumeration names = request.getParameterNames();
-		while (names.hasMoreElements()) {
-			String key = (String) names.nextElement();
-			System.out.println(key + ": " + request.getParameter(key));
-			if (getParamSet == null) {
-				getParamSet = "?" + key + "=" + request.getParameter(key);
-			} else {
-				getParamSet += "&" + key + "=" + request.getParameter(key);
-			}
-		}
-		model.addAttribute("getParamSet", getParamSet);
-		model.addAttribute("requestUri", request.getRequestURI());
 
 	}
 
