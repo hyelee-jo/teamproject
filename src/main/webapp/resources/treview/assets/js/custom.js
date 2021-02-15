@@ -16,6 +16,7 @@ jQuery(document).ready(function($) {
     $("html, body").animate({
       scrollTop: 0
     }, 600);
+    parent.fn_treviewScrollUp();
     return false;
   });
 

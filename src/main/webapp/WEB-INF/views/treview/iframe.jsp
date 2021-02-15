@@ -15,6 +15,10 @@
 		$("#treviewIfame").width($("#treviewWidth").val());
 		$("#treviewIfame").height(parseInt($("#treviewHeight").val()) + 100);
 	}
+	
+	function fn_treviewScrollUp() {
+		$("html, body").animate({scrollTop: 0}, 600);
+	}
 
 	$(window).resize(function() {
 		$("#treviewIfame").width(document.body.offsetWidth);

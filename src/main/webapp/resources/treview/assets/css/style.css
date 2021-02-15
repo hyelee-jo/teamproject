@@ -2415,7 +2415,7 @@ section#subintro{
 	}
 
 	ul.portfolio-area li {
-		max-width:300px;
+		/* max-width:350px; */
 		width:auto;
 		height:auto;
 		margin:0 10px 10px 10px;
