@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.zerock.domain.MemberVO;
 import org.zerock.domain.TreviewVO;
 import org.zerock.service.TreviewService;
 
@@ -126,7 +129,7 @@ public class TreviewInnerController {
 		model.addAttribute("message", msg);
 		model.addAttribute("redirect", "/treview/list");
 
-		response.sendRedirect("/treview/message?message=/treview/writeSave/" + msg + "&redirect=/treview/view?key=" + params.getReviewno());
+		response.sendRedirect(request.getContextPath() + "/treview/message?message=/treview/writeSave/" + msg + "&redirect=/treview/view?key=" + params.getReviewno());
 
 	}
 
@@ -165,13 +168,13 @@ public class TreviewInnerController {
 	 * @throws IOException
 	 */
 	@PostMapping("/commentSave")
-	public void commentSave(@ModelAttribute("params") TreviewVO params, Model model, HttpServletResponse response) throws IOException {
+	public void commentSave(@ModelAttribute("params") TreviewVO params, Model model, HttpServletResponse response, HttpServletRequest request) throws IOException {
 
 		log.info("[/treview/commentSave] 여행후기 댓글 저장 :: params >> " + ToStringBuilder.reflectionToString(params));
 
 		treviewService.saveTreviewReply(params);
 
-		response.sendRedirect("/treview/message?message=/treview/commentSave&redirect=/treview/view?key=" + params.getReviewno());
+		response.sendRedirect(request.getContextPath() + "/treview/message?message=/treview/commentSave&redirect=/treview/view?key=" + params.getReviewno());
 
 	}
 
@@ -184,17 +187,17 @@ public class TreviewInnerController {
 	 * @throws IOException
 	 */
 	@PostMapping("/treviewDelete")
-	public void treviewDelete(@ModelAttribute("delete") TreviewVO params, Model model, HttpServletResponse response) throws IOException {
+	public void treviewDelete(@ModelAttribute("delete") TreviewVO params, Model model, HttpServletResponse response, HttpServletRequest request) throws IOException {
 
 		log.info("[/treview/commentDelete] 여행후기 댓글 삭제 :: params >> " + ToStringBuilder.reflectionToString(params));
 
 		if (params.getType().equals("treview")) {
 			treviewService.deleteTreviewReplyAll(params);
 			treviewService.deleteTreview(params);
-			response.sendRedirect("/treview/message?message=/treview/treviewDelete/treview&redirect=/treview/list");
+			response.sendRedirect(request.getContextPath() + "/treview/message?message=/treview/treviewDelete/treview&redirect=/treview/list");
 		} else if (params.getType().equals("comment")) {
 			treviewService.deleteTreviewReply(params);
-			response.sendRedirect("/treview/message?message=/treview/treviewDelete/comment&redirect=/treview/view?key=" + params.getReviewno());
+			response.sendRedirect(request.getContextPath() + "/treview/message?message=/treview/treviewDelete/comment&redirect=/treview/view?key=" + params.getReviewno());
 		}
 
 	}
@@ -220,6 +223,10 @@ public class TreviewInnerController {
 			params.setMessage("댓글이 삭제되었습니다.");
 		} else if (params.getMessage().equals("/treview/treviewDelete/treview")) {
 			params.setMessage("여행후기가 삭제되었습니다.");
+		} else if (params.getMessage().equals("/treview/tempLogin/login")) {
+			params.setMessage("로그인되었습니다.");
+		} else if (params.getMessage().equals("/treview/tempLogin/logout")) {
+			params.setMessage("로그아웃되었습니다.");
 		}
 
 		model.addAttribute("params", params);
@@ -260,6 +267,50 @@ public class TreviewInnerController {
 			}
 		} catch (Exception ex) {
 			throw new RuntimeException("file Load Error");
+		}
+
+	}
+
+	private void getParamSet(HttpServletRequest request, Model model) {
+		String getParamSet = null;
+		Enumeration names = request.getParameterNames();
+		while (names.hasMoreElements()) {
+			String key = (String) names.nextElement();
+			System.out.println(key + ": " + request.getParameter(key));
+			if (getParamSet == null) {
+				getParamSet = "?" + key + "=" + request.getParameter(key);
+			} else {
+				getParamSet += "&" + key + "=" + request.getParameter(key);
+			}
+		}
+		model.addAttribute("getParamSet", getParamSet);
+		model.addAttribute("requestUri", request.getRequestURI());
+
+	}
+
+	/**
+	 * 임시로그인소스 (추후삭제)
+	 * 
+	 * @param model
+	 * @param response
+	 * @param request
+	 * @throws IOException
+	 */
+	@PostMapping("/tempLogin")
+	public void tempLogin(@ModelAttribute("params") TreviewVO params // params
+			, Model model // model
+			, HttpServletResponse response // response
+			, HttpServletRequest request // request
+	) throws IOException {
+
+		if (params.getType() != null && params.getType().equals("login")) {
+			MemberVO user = new MemberVO();
+			user.setId("newbie");
+			request.getSession().setAttribute("authUser", user);
+			response.sendRedirect(request.getContextPath() + "/treview/message?message=/treview/tempLogin/login&redirect=/treview/list");
+		} else {
+			request.getSession().removeAttribute("authUser");
+			response.sendRedirect(request.getContextPath() + "/treview/message?message=/treview/tempLogin/logout&redirect=/treview/list");
 		}
 
 	}

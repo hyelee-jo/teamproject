@@ -13,7 +13,7 @@
 <body>
 	<script>
 		alert("${params.message}");
-		$(parent.document).find("#treviewURL").val("${params.redirect}");
+		$(parent.document).find("#treviewURL").val("${root}${params.redirect}");
 		parent.fn_moveTreviewURL();
 		//location.href = "${params.redirect}";
 	</script>

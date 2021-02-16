@@ -14,7 +14,7 @@
 			, #{rows} AS "rows"
 			, #{page_rows} AS "page_rows"
 			, X.CNT_TOTAL
-			, TRUNC(X.CNT_TOTAL / #{rows}, 0) + 1 AS CNT_PAGE
+			, TRUNC((X.CNT_TOTAL - 1) / #{rows}, 0) + 1 AS CNT_PAGE
 			, TRUNC(TRUNC((X.RNUM - 1) / #{rows}, 0) / #{page_rows}, 0) * #{page_rows} + 1 AS START_PAGE
 			, RB.*
 			, SUBSTR(RB.REVIEWCONTENT, 1, 100) AS REVIEWCONTENTSHORT
@@ -144,7 +144,7 @@
 			, #{rows} AS "rows"
 			, #{page_rows} AS "page_rows"
 			, X.CNT_TOTAL
-			, TRUNC(X.CNT_TOTAL / #{rows}, 0) + 1 AS CNT_PAGE
+			, TRUNC((X.CNT_TOTAL - 1) / #{rows}, 0) + 1 AS CNT_PAGE
 			, TRUNC(TRUNC((X.RNUM - 1) / #{rows}, 0) / #{page_rows}, 0) * #{page_rows} + 1 AS START_PAGE
 			, RR.*
 			, TO_CHAR(RR.CREATED_DT, 'YYYY-MM-DD HH24:MI:SS') AS CREATED_DT_STR

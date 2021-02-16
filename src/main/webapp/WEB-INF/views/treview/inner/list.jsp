@@ -85,6 +85,7 @@
             </c:forEach>
           </ul>
         </div>
+        
         <c:if test="${not empty authUser}">
         <div class="row">
           <div class="span12">
@@ -92,10 +93,26 @@
               <ul>
               	<li><a href="javascript: fn_moveTreviewURL('${root}/treview/write');">여행후기 작성하기</a></li>
               </ul>
+              <ul>
+              	<li><a href="javascript: fn_tempLogin('logout');">로그아웃</a></li>
+              </ul>
             </div>
           </div>
         </div>
         </c:if>
+        
+        <c:if test="${empty authUser}">
+        <div class="row">
+          <div class="span12">
+            <div class="pagination">
+              <ul>
+              	<li><a href="javascript: fn_tempLogin('login');">로그인(newbie)</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        </c:if>
+        
         <c:if test="${fn:length(treviewList) > 0}">
 	        <div class="row">
 	          <div class="span12">
@@ -121,6 +138,10 @@
         </c:if>
       </div>
     </section>
+    
+    <form action="${root}/treview/tempLogin" method="post" id="loginForm" style="display: none;">
+    	<input type="hidden" id="loginFormType" name="type" value="login">
+    </form>
 
   </div>
   <a href="#" class="scrollup"><i class="icon-chevron-up icon-square icon-48 active"></i></a>
@@ -164,6 +185,11 @@
   	$(window).resize(function() {
   		resizeImg();
   	});
+  	
+  	function fn_tempLogin($type) {
+  		$('#loginFormType').val($type);
+  		$('#loginForm').submit();
+  	}
   </script>
   <%@ include file="/WEB-INF/views/treview/inner/script.jsp" %>
 
