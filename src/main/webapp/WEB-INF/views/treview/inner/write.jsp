@@ -58,6 +58,7 @@
             <div id="errormessage"></div>
             <form action="${root}/treview/writeSave" id="params" name="params" method="post" role="form" class="contactForm" enctype="multipart/form-data">
               <input type="hidden" id="reviewno" name="reviewno" value="${treview.reviewno}">
+              <input type="hidden" id="id" name="id" value="${authUser.id}">
               <div class="row">
                 <div class="form-group" style="width: 100%;">
                   <input type="text" class="input-block-level" name="reviewtitle" id="reviewtitle" value="${treview.reviewtitle}" placeholder="여행후기 제목 입력" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
@@ -75,9 +76,11 @@
                   <textarea class="input-block-level" id="reviewcontent" name="reviewcontent" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="여행후기 내용 입력">${treview.reviewcontent}</textarea>
                   <div class="validation"></div>
                   <input type="file" name="imageFile" accept=".gif, .jpg, .jpeg, .png">
+                  <c:if test="${not empty authUser}">
                   <div class="text-center">
                     <button class="btn btn-theme" type="button" onclick="javascript: save();">저장</button>
                   </div>
+                  </c:if>
                 </div>
               </div>
             </form>

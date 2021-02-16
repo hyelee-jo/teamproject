@@ -74,6 +74,10 @@ public class TreviewController {
 		params.setReviewtitle(request.getParameter("reviewtitle"));
 		params.setOrderno(request.getParameter("orderno").isEmpty() ? 0 : Integer.parseInt(request.getParameter("orderno").toString()));
 		params.setReviewcontent(request.getParameter("reviewcontent"));
+		params.setId(request.getParameter("id"));
+		if (params.getId() == null) {
+			params.setId("newbie");
+		}
 
 		if (imageFile != null && imageFile.getOriginalFilename() != null && !imageFile.getOriginalFilename().isEmpty()) {
 			String ext = imageFile.getOriginalFilename().substring(imageFile.getOriginalFilename().lastIndexOf(".") + 1);

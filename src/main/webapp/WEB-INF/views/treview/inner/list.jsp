@@ -85,6 +85,7 @@
             </c:forEach>
           </ul>
         </div>
+        <c:if test="${not empty authUser}">
         <div class="row">
           <div class="span12">
             <div class="pagination">
@@ -94,6 +95,7 @@
             </div>
           </div>
         </div>
+        </c:if>
         <c:if test="${fn:length(treviewList) > 0}">
 	        <div class="row">
 	          <div class="span12">

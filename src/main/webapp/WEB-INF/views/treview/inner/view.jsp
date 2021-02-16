@@ -69,8 +69,10 @@
               </div>
               <p style="word-break: break-all;">${fn:replace(treview.reviewcontent, newLineChar, "<br>")}</p>
               
+              <c:if test="${not empty authUser and authUser.id eq treview.id}">
               <button class="btn btn-theme" type="button" onclick="javascript: fn_moveTreviewURL('${root}/treview/write?key=${treview.reviewno}');">여행후기 수정하기</button>
               <button class="btn btn-theme" type="button" onclick="javascript: deleteTreview();">삭제하기</button>
+              </c:if>
             </article>
             <c:if test="${fn:length(replyList) > 0}">
 	            <h4>댓글목록</h4>
@@ -84,8 +86,10 @@
 		                  <h5 class="media-heading"><a href="#">${reply.replier}</a></h5>
 		                  <span>${reply.created_dt_str}</span>
 		                  <p>${fn:replace(reply.reply, newLineChar, "<br>")}</p>
+		                  <c:if test="${not empty authUser and authUser.id eq reply.replier}">
 		                  <a href="javascript: deleteComment('${reply.replyno}');" class="reply">삭제</a>
 		                  <a href="javascript: modifyComment('${reply.replyno}', '${replySt.index}');" class="reply" style="margin-right: 1em;">수정</a>
+		                  </c:if>
 		                  <div class="clearfix"></div>
 		                  <input type="hidden" id="replyArea${replySt.index}" value="${reply.reply}">
 		                </div>
@@ -116,11 +120,13 @@
 		          </div>
 		        </div>
 	        </c:if>
+	        <c:if test="${not empty authUser}">
             <div class="comment-post">
               <h4>댓글작성</h4>
               <form action="${root}/treview/commentSave" id="params" name="params" method="post" class="comment-form" name="comment-form">
                 <input type="hidden" id="reviewno" name="reviewno" value="${treview.reviewno}">
                 <input type="hidden" id="replyno" name="replyno" value="">
+                <input type="hidden" id="replier" name="replier" value="${authUser.id}">
                 <div class="row">
                   <div class="span8">
                     <label>댓글 <span>*</span></label>
@@ -130,6 +136,7 @@
                 </div>
               </form>
             </div>
+            </c:if>
           </div>
         </div>
       </div>
