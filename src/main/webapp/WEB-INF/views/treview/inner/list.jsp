@@ -13,33 +13,33 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <link href="/resources/treview/assets/css/bootstrap.css" rel="stylesheet">
-  <link href="/resources/treview/assets/css/bootstrap-responsive.css" rel="stylesheet">
-  <link href="/resources/treview/assets/css/prettyPhoto.css" rel="stylesheet">
-  <link href="/resources/treview/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-  <link href="/resources/treview/assets/css/flexslider.css" rel="stylesheet">
-  <link href="/resources/treview/assets/css/style.css" rel="stylesheet">
-  <link href="/resources/treview/assets/color/default.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/bootstrap.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/prettyPhoto.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/flexslider.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/style.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/color/default.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,600,400italic|Open+Sans:400,600,700" rel="stylesheet">
-  <link rel="shortcut icon" href="/resources/treview/assets/ico/favicon.ico">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/resources/treview/assets/ico/apple-touch-icon-144-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/resources/treview/assets/ico/apple-touch-icon-114-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/resources/treview/assets/ico/apple-touch-icon-72-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" href="/resources/treview/assets/ico/apple-touch-icon-57-precomposed.png">
+  <link rel="shortcut icon" href="${root}/resources/treview/assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${root}/resources/treview/assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${root}/resources/treview/assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${root}/resources/treview/assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="${root}/resources/treview/assets/ico/apple-touch-icon-57-precomposed.png">
 
-  <script src="/resources/treview/assets/js/jquery.js"></script>
-  <script src="/resources/treview/assets/js/raphael-min.js"></script>
-  <script src="/resources/treview/assets/js/jquery.easing.1.3.js"></script>
-  <script src="/resources/treview/assets/js/bootstrap.js"></script>
-  <script src="/resources/treview/assets/js/google-code-prettify/prettify.js"></script>
-  <script src="/resources/treview/assets/js/jquery.elastislide.js"></script>
-  <script src="/resources/treview/assets/js/jquery.prettyPhoto.js"></script>
-  <script src="/resources/treview/assets/js/jquery.flexslider.js"></script>
-  <script src="/resources/treview/assets/js/jquery-hover-effect.js"></script>
-  <script src="/resources/treview/assets/js/portfolio/jquery.quicksand.js"></script>
-  <script src="/resources/treview/assets/js/portfolio/setting.js"></script>
-  <script src="/resources/treview/assets/js/animate.js"></script>
-  <script src="/resources/treview/assets/js/custom.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.js"></script>
+  <script src="${root}/resources/treview/assets/js/raphael-min.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.easing.1.3.js"></script>
+  <script src="${root}/resources/treview/assets/js/bootstrap.js"></script>
+  <script src="${root}/resources/treview/assets/js/google-code-prettify/prettify.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.elastislide.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.prettyPhoto.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.flexslider.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery-hover-effect.js"></script>
+  <script src="${root}/resources/treview/assets/js/portfolio/jquery.quicksand.js"></script>
+  <script src="${root}/resources/treview/assets/js/portfolio/setting.js"></script>
+  <script src="${root}/resources/treview/assets/js/animate.js"></script>
+  <script src="${root}/resources/treview/assets/js/custom.js"></script>
 
 </head>
 
@@ -50,7 +50,7 @@
     <section id="maincontent">
       <div class="container">
       	<div class="post-heading">
-          <h3><a href="javascript: fn_moveTreviewURL('/treview/list');">여행후기 목록</a></h3>
+          <h3><a href="javascript: fn_moveTreviewURL('${root}/treview/list');">여행후기 목록</a></h3>
         </div>
         <div class="row" style="border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;">
           <ul class="portfolio-area da-thumbs">
@@ -59,7 +59,7 @@
 	              <div class="span3">
 	                <div class="thumbnail">
 	                  <div class="image-wrapp">
-	                    <img class="listImgTag" src="/treview/download/${treview.img_key}" alt="Portfolio name" title="" class="location${treview.reviewno}" onError="this.onerror=null;this.src='/resources/treview/assets/img/noimage.gif'" onload="resizeImgOnload(this);" />
+	                    <img class="listImgTag" src="${root}/treview/download/${treview.img_key}" alt="Portfolio name" title="" class="location${treview.reviewno}" onError="this.onerror=null;this.src='${root}/resources/treview/assets/img/noimage.gif'" onload="resizeImgOnload(this);" />
 	                    <article class="da-animate da-slideFromRight">
 	                      <a class="zoom" data-pretty="" href="javascript: detailImageView('${treview.reviewno}');">
 								<i class="icon-zoom-in icon-rounded icon-48 active"></i>
@@ -89,7 +89,7 @@
           <div class="span12">
             <div class="pagination">
               <ul>
-              	<li><a href="javascript: fn_moveTreviewURL('/treview/write');">여행후기 작성하기</a></li>
+              	<li><a href="javascript: fn_moveTreviewURL('${root}/treview/write');">여행후기 작성하기</a></li>
               </ul>
             </div>
           </div>
@@ -100,17 +100,17 @@
 	            <div class="pagination">
 	              <ul>
 	              	<c:if test="${treviewList[0].page ne 1}">
-	                	<li><a href="javascript: fn_moveTreviewURL('/treview/list?page=${treviewList[0].page - 1}');">Prev</a></li>
+	                	<li><a href="javascript: fn_moveTreviewURL('${root}/treview/list?page=${treviewList[0].page - 1}');">Prev</a></li>
 	                </c:if>
 	                
 	                <c:forEach begin="${treviewList[0].start_page}" end="${treviewList[0].start_page + treviewList[0].page_rows - 1}" var="page">
 	                	<c:if test="${page <= treviewList[0].cnt_page}">
-	                		<li class="${page eq treviewList[0].page ? 'active' : ''}"><a href="javascript: fn_moveTreviewURL('/treview/list?page=${page}');">${page}</a></li>
+	                		<li class="${page eq treviewList[0].page ? 'active' : ''}"><a href="javascript: fn_moveTreviewURL('${root}/treview/list?page=${page}');">${page}</a></li>
 	                	</c:if>
 	                </c:forEach>
 	                
 	                <c:if test="${treviewList[0].page ne treviewList[0].cnt_page}">
-	                	<li><a href="javascript: fn_moveTreviewURL('/treview/list?page=${treviewList[0].page + 1}');">Next</a></li>
+	                	<li><a href="javascript: fn_moveTreviewURL('${root}/treview/list?page=${treviewList[0].page + 1}');">Next</a></li>
 	                </c:if>
 	              </ul>
 	            </div>
@@ -125,16 +125,16 @@
   
   <script>
   	function detailImageView(rnum) {
-  		fn_moveTreviewURL("/treview/view?key=" + rnum);
-  		//location.href = "/treview/view?key=" + rnum;
+  		fn_moveTreviewURL("${root}/treview/view?key=" + rnum);
+  		//location.href = "${root}/treview/view?key=" + rnum;
   	}
   	
   	$(".thumbnailDesc").find(".title, .content, .post-meta").click(function(e) {
   		e.preventDefault();
   		
   		var $key = $(this).attr("data-key");
-  		fn_moveTreviewURL("/treview/view?key=" + $key);
-  		//location.href = "/treview/view?key=" + $key;
+  		fn_moveTreviewURL("${root}/treview/view?key=" + $key);
+  		//location.href = "${root}/treview/view?key=" + $key;
   	});
   	
   	function resizeImgOnload($this) {

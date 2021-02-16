@@ -14,31 +14,31 @@
   <meta name="description" content="">
   <meta name="author" content="">
   
-  <link href="/resources/treview/assets/css/bootstrap.css" rel="stylesheet">
-  <link href="/resources/treview/assets/css/bootstrap-responsive.css" rel="stylesheet">
-  <link href="/resources/treview/assets/css/prettyPhoto.css" rel="stylesheet">
-  <link href="/resources/treview/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-  <link href="/resources/treview/assets/css/flexslider.css" rel="stylesheet">
-  <link href="/resources/treview/assets/css/style.css" rel="stylesheet">
-  <link href="/resources/treview/assets/color/default.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/bootstrap.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/prettyPhoto.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/flexslider.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/style.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/color/default.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,600,400italic|Open+Sans:400,600,700" rel="stylesheet">
 
-  <link rel="shortcut icon" href="/resources/treview/assets/ico/favicon.ico">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/resources/treview/assets/ico/apple-touch-icon-144-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/resources/treview/assets/ico/apple-touch-icon-114-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/resources/treview/assets/ico/apple-touch-icon-72-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" href="/resources/treview/assets/ico/apple-touch-icon-57-precomposed.png">
-  <script src="/resources/treview/assets/js/jquery.js"></script>
-  <script src="/resources/treview/assets/js/raphael-min.js"></script>
-  <script src="/resources/treview/assets/js/jquery.easing.1.3.js"></script>
-  <script src="/resources/treview/assets/js/bootstrap.js"></script>
-  <script src="/resources/treview/assets/js/google-code-prettify/prettify.js"></script>
-  <script src="/resources/treview/assets/js/jquery.elastislide.js"></script>
-  <script src="/resources/treview/assets/js/jquery.prettyPhoto.js"></script>
-  <script src="/resources/treview/assets/js/jquery.flexslider.js"></script>
-  <script src="/resources/treview/assets/js/jquery-hover-effect.js"></script>
-  <script src="/resources/treview/assets/js/animate.js"></script>
-  <script src="/resources/treview/assets/js/custom.js"></script>
+  <link rel="shortcut icon" href="${root}/resources/treview/assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${root}/resources/treview/assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${root}/resources/treview/assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${root}/resources/treview/assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="${root}/resources/treview/assets/ico/apple-touch-icon-57-precomposed.png">
+  <script src="${root}/resources/treview/assets/js/jquery.js"></script>
+  <script src="${root}/resources/treview/assets/js/raphael-min.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.easing.1.3.js"></script>
+  <script src="${root}/resources/treview/assets/js/bootstrap.js"></script>
+  <script src="${root}/resources/treview/assets/js/google-code-prettify/prettify.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.elastislide.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.prettyPhoto.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.flexslider.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery-hover-effect.js"></script>
+  <script src="${root}/resources/treview/assets/js/animate.js"></script>
+  <script src="${root}/resources/treview/assets/js/custom.js"></script>
 
 </head>
 
@@ -49,7 +49,7 @@
     <section id="maincontent">
       <div class="container">
       	<div class="post-heading">
-          <h3><a href="javascript: fn_moveTreviewURL('/treview/list');">여행후기 상세</a></h3>
+          <h3><a href="javascript: fn_moveTreviewURL('${root}/treview/list');">여행후기 상세</a></h3>
         </div>
         <div class="row">
           <div class="" style="width: 100%;">
@@ -59,7 +59,7 @@
               </div>
               <div class="clearfix">
               </div>
-              <img class="resizeImgTarget" src="/treview/download/${treview.img_key}" alt="" onError="this.onerror=null;$(this).hide();" style="width: 100%;" onload="resizeImgOnload(this);" />
+              <img class="resizeImgTarget" src="${root}/treview/download/${treview.img_key}" alt="" onError="this.onerror=null;$(this).hide();" style="width: 100%;" onload="resizeImgOnload(this);" />
               <ul class="post-meta">
                 <li class="first"><i class="icon-calendar"></i><span>${treview.reviewdatestr}</span></li>
                 <li><i class="icon-comments"></i><span><a href="#">${treview.cnt_reply} comments</a></span></li>
@@ -69,7 +69,7 @@
               </div>
               <p style="word-break: break-all;">${fn:replace(treview.reviewcontent, newLineChar, "<br>")}</p>
               
-              <button class="btn btn-theme" type="button" onclick="javascript: fn_moveTreviewURL('/treview/write?key=${treview.reviewno}');">여행후기 수정하기</button>
+              <button class="btn btn-theme" type="button" onclick="javascript: fn_moveTreviewURL('${root}/treview/write?key=${treview.reviewno}');">여행후기 수정하기</button>
               <button class="btn btn-theme" type="button" onclick="javascript: deleteTreview();">삭제하기</button>
             </article>
             <c:if test="${fn:length(replyList) > 0}">
@@ -78,7 +78,7 @@
 	              <c:forEach items="${replyList}" var="reply" varStatus="replySt">
 		              <li class="media">
 		                <a class="pull-left" href="#">
-							<img class="media-object" src="/resources/treview/assets/img/small-avatar.png" alt="" />
+							<img class="media-object" src="${root}/resources/treview/assets/img/small-avatar.png" alt="" />
 							</a>
 		                <div class="media-body">
 		                  <h5 class="media-heading"><a href="#">${reply.replier}</a></h5>
@@ -99,17 +99,17 @@
 		            <div class="pagination">
 		              <ul>
 		              	<c:if test="${replyList[0].page ne 1}">
-		                	<li><a href="javascript: fn_moveTreviewURL('/treview/view?key=${treview.reviewno}&page=${replyList[0].page - 1}');">Prev</a></li>
+		                	<li><a href="javascript: fn_moveTreviewURL('${root}/treview/view?key=${treview.reviewno}&page=${replyList[0].page - 1}');">Prev</a></li>
 		                </c:if>
 		                
 		                <c:forEach begin="${replyList[0].start_page}" end="${replyList[0].start_page + replyList[0].page_rows - 1}" var="page">
 		                	<c:if test="${page <= replyList[0].cnt_page}">
-		                		<li class="${page eq replyList[0].page ? 'active' : ''}"><a href="javascript: fn_moveTreviewURL('/treview/view?key=${treview.reviewno}&page=${page}');">${page}</a></li>
+		                		<li class="${page eq replyList[0].page ? 'active' : ''}"><a href="javascript: fn_moveTreviewURL('${root}/treview/view?key=${treview.reviewno}&page=${page}');">${page}</a></li>
 		                	</c:if>
 		                </c:forEach>
 		                
 		                <c:if test="${replyList[0].page ne replyList[0].cnt_page}">
-		                	<li><a href="javascript: fn_moveTreviewURL('/treview/view?key=${treview.reviewno}&page=${replyList[0].page + 1}');">Next</a></li>
+		                	<li><a href="javascript: fn_moveTreviewURL('${root}/treview/view?key=${treview.reviewno}&page=${replyList[0].page + 1}');">Next</a></li>
 		                </c:if>
 		              </ul>
 		            </div>
@@ -118,7 +118,7 @@
 	        </c:if>
             <div class="comment-post">
               <h4>댓글작성</h4>
-              <form action="/treview/commentSave" id="params" name="params" method="post" class="comment-form" name="comment-form">
+              <form action="${root}/treview/commentSave" id="params" name="params" method="post" class="comment-form" name="comment-form">
                 <input type="hidden" id="reviewno" name="reviewno" value="${treview.reviewno}">
                 <input type="hidden" id="replyno" name="replyno" value="">
                 <div class="row">
@@ -136,7 +136,7 @@
     </section>
   </div>
   <a href="#" class="scrollup"><i class="icon-chevron-up icon-square icon-48 active"></i></a>
-  <form action="/treview/treviewDelete" id="delete" name="delete" style="display: none;" method="POST">
+  <form action="${root}/treview/treviewDelete" id="delete" name="delete" style="display: none;" method="POST">
   	<input type="hidden" id="reviewno" name="reviewno" value="${treview.reviewno}">
   	<input type="hidden" id="replyno" name="replyno" value="">
   	<input type="hidden" id="type" name="type" value="">

@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="${root}/resources/assets/css/style.css">
   <link rel="stylesheet" href="${root}/resources/assets/css/swiper.css">
   
-  <script src="/resources/treview/assets/js/jquery.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.js"></script>
   
 </head>
 

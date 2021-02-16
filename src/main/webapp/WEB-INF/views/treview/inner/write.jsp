@@ -13,32 +13,32 @@
   <meta name="description" content="">
   <meta name="author" content="">
   
-  <link href="/resources/treview/assets/css/bootstrap.css" rel="stylesheet">
-  <link href="/resources/treview/assets/css/bootstrap-responsive.css" rel="stylesheet">
-  <link href="/resources/treview/assets/css/prettyPhoto.css" rel="stylesheet">
-  <link href="/resources/treview/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-  <link href="/resources/treview/assets/css/flexslider.css" rel="stylesheet">
-  <link href="/resources/treview/assets/css/style.css" rel="stylesheet">
-  <link href="/resources/treview/assets/color/default.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/bootstrap.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/prettyPhoto.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/flexslider.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/css/style.css" rel="stylesheet">
+  <link href="${root}/resources/treview/assets/color/default.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,600,400italic|Open+Sans:400,600,700" rel="stylesheet">
-  <link rel="shortcut icon" href="/resources/treview/assets/ico/favicon.ico">
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/resources/treview/assets/ico/apple-touch-icon-144-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/resources/treview/assets/ico/apple-touch-icon-114-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/resources/treview/assets/ico/apple-touch-icon-72-precomposed.png">
-  <link rel="apple-touch-icon-precomposed" href="/resources/treview/assets/ico/apple-touch-icon-57-precomposed.png">
+  <link rel="shortcut icon" href="${root}/resources/treview/assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${root}/resources/treview/assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${root}/resources/treview/assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${root}/resources/treview/assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="${root}/resources/treview/assets/ico/apple-touch-icon-57-precomposed.png">
   
-  <script src="/resources/treview/assets/js/jquery.js"></script>
-  <script src="/resources/treview/assets/js/raphael-min.js"></script>
-  <script src="/resources/treview/assets/js/jquery.easing.1.3.js"></script>
-  <script src="/resources/treview/assets/js/bootstrap.js"></script>
-  <script src="/resources/treview/assets/js/google-code-prettify/prettify.js"></script>
-  <script src="/resources/treview/assets/js/jquery.elastislide.js"></script>
-  <script src="/resources/treview/assets/js/jquery.prettyPhoto.js"></script>
-  <script src="/resources/treview/assets/js/jquery.flexslider.js"></script>
-  <script src="/resources/treview/assets/js/jquery-hover-effect.js"></script>
-  <script src="/resources/treview/assets/js/animate.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.js"></script>
+  <script src="${root}/resources/treview/assets/js/raphael-min.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.easing.1.3.js"></script>
+  <script src="${root}/resources/treview/assets/js/bootstrap.js"></script>
+  <script src="${root}/resources/treview/assets/js/google-code-prettify/prettify.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.elastislide.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.prettyPhoto.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery.flexslider.js"></script>
+  <script src="${root}/resources/treview/assets/js/jquery-hover-effect.js"></script>
+  <script src="${root}/resources/treview/assets/js/animate.js"></script>
   <script src="contactform/contactform.js"></script>
-  <script src="/resources/treview/assets/js/custom.js"></script>
+  <script src="${root}/resources/treview/assets/js/custom.js"></script>
 
 </head>
 
@@ -48,7 +48,7 @@
     <section id="maincontent">
       <div class="container">
       	<div class="post-heading">
-          <h3><a href="javascript: fn_moveTreviewURL('/treview/list');">여행후기 작성하기</a></h3>
+          <h3><a href="javascript: fn_moveTreviewURL('${root}/treview/list');">여행후기 작성하기</a></h3>
         </div>
         <div class="row">
           <div class="" style="width: 100%;">
@@ -56,7 +56,7 @@
             </div>
             <div id="sendmessage">Your message has been sent. Thank you!</div>
             <div id="errormessage"></div>
-            <form action="/treview/writeSave" id="params" name="params" method="post" role="form" class="contactForm" enctype="multipart/form-data">
+            <form action="${root}/treview/writeSave" id="params" name="params" method="post" role="form" class="contactForm" enctype="multipart/form-data">
               <input type="hidden" id="reviewno" name="reviewno" value="${treview.reviewno}">
               <div class="row">
                 <div class="form-group" style="width: 100%;">
