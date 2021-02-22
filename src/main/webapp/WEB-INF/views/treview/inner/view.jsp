@@ -59,7 +59,7 @@
               </div>
               <div class="clearfix">
               </div>
-              <img class="resizeImgTarget" src="${root}/treview/download/${treview.img_key}" alt="" onError="this.onerror=null;$(this).hide();" style="width: 100%;" onload="resizeImgOnload(this);" />
+              <img class="resizeImgTarget" src="${treview.img_path}" alt="" onError="this.onerror=$(this).hide();" style="width: 100%;" onload="resizeImgOnload(this);" />
               <ul class="post-meta">
                 <li class="first"><i class="icon-calendar"></i><span>${treview.reviewdatestr}</span></li>
                 <li><i class="icon-comments"></i><span><a href="#">${treview.cnt_reply} comments</a></span></li>
@@ -69,7 +69,7 @@
               </div>
               <p style="word-break: break-all;">${fn:replace(treview.reviewcontent, newLineChar, "<br>")}</p>
               
-              <c:if test="${not empty authUser and authUser.id eq treview.id}">
+              <c:if test="${(not empty authUser and authUser.id eq treview.id) or (not empty authUser and authUser.id eq 'admin')}">
               <button class="btn btn-theme" type="button" onclick="javascript: fn_moveTreviewURL('${root}/treview/write?key=${treview.reviewno}');">여행후기 수정하기</button>
               <button class="btn btn-theme" type="button" onclick="javascript: deleteTreview();">삭제하기</button>
               </c:if>
@@ -86,9 +86,9 @@
 		                  <h5 class="media-heading"><a href="#">${reply.replier}</a></h5>
 		                  <span>${reply.created_dt_str}</span>
 		                  <p>${fn:replace(reply.reply, newLineChar, "<br>")}</p>
-		                  <c:if test="${not empty authUser and authUser.id eq reply.replier}">
-		                  <a href="javascript: deleteComment('${reply.replyno}');" class="reply">삭제</a>
-		                  <a href="javascript: modifyComment('${reply.replyno}', '${replySt.index}');" class="reply" style="margin-right: 1em;">수정</a>
+		                  <c:if test="${(not empty authUser and authUser.id eq reply.replier) or (not empty authUser and authUser.id eq 'admin')}">
+		                  	<a href="javascript: deleteComment('${reply.replyno}');" class="reply">삭제</a>
+		                  	<a href="javascript: modifyComment('${reply.replyno}', '${replySt.index}');" class="reply" style="margin-right: 1em;">수정</a>
 		                  </c:if>
 		                  <div class="clearfix"></div>
 		                  <input type="hidden" id="replyArea${replySt.index}" value="${reply.reply}">

@@ -75,25 +75,27 @@ public class TreviewController {
 		params.setReviewtitle(request.getParameter("reviewtitle"));
 		params.setOrderno(request.getParameter("orderno").isEmpty() ? 0 : Integer.parseInt(request.getParameter("orderno").toString()));
 		params.setReviewcontent(request.getParameter("reviewcontent"));
+		params.setImg_path(request.getParameter("img_path"));
+		params.setImg_name(request.getParameter("img_name"));
 		params.setId(request.getParameter("id"));
 		if (params.getId() == null) {
 			params.setId("newbie");
 		}
 
-		if (imageFile != null && imageFile.getOriginalFilename() != null && !imageFile.getOriginalFilename().isEmpty()) {
-			String ext = imageFile.getOriginalFilename().substring(imageFile.getOriginalFilename().lastIndexOf(".") + 1);
-			File dir = new File(imagePath);
-			System.out.println("dir.exists()::" + dir.exists());
-			if (!new File(imagePath).exists()) {
-				new File(imagePath).mkdirs();
-			}
-			String uuid = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
-			String fullDir = imagePath + "/" + uuid + "." + ext;
-			params.setImg_path(fullDir);
-			params.setImg_key(uuid);
-			params.setImg_name(uuid + "." + ext);
-			imageFile.transferTo(new File(fullDir));
-		}
+//		if (imageFile != null && imageFile.getOriginalFilename() != null && !imageFile.getOriginalFilename().isEmpty()) {
+//			String ext = imageFile.getOriginalFilename().substring(imageFile.getOriginalFilename().lastIndexOf(".") + 1);
+//			File dir = new File(imagePath);
+//			System.out.println("dir.exists()::" + dir.exists());
+//			if (!new File(imagePath).exists()) {
+//				new File(imagePath).mkdirs();
+//			}
+//			String uuid = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+//			String fullDir = imagePath + "/" + uuid + "." + ext;
+//			params.setImg_path(fullDir);
+//			params.setImg_key(uuid);
+//			params.setImg_name(uuid + "." + ext);
+//			imageFile.transferTo(new File(fullDir));
+//		}
 
 		log.info("[/treview/writeSave] 여행후기 등록/수정 :: params >> " + ToStringBuilder.reflectionToString(params));
 
@@ -268,7 +270,7 @@ public class TreviewController {
 
 		if (params.getType() != null && params.getType().equals("login")) {
 			MemberVO user = new MemberVO();
-			user.setId("newbie");
+			user.setId(params.getId());
 			request.getSession().setAttribute("authUser", user);
 			response.sendRedirect(request.getContextPath() + "/treview/message?message=/treview/tempLogin/login&redirect=/treview/list");
 		} else {

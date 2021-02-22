@@ -59,6 +59,8 @@
             <form action="${root}/treview/writeSave" id="params" name="params" method="post" role="form" class="contactForm" enctype="multipart/form-data">
               <input type="hidden" id="reviewno" name="reviewno" value="${treview.reviewno}">
               <input type="hidden" id="id" name="id" value="${authUser.id}">
+              <input type="hidden" id="img_path" name="img_path" value="">
+              <input type="hidden" id="img_name" name="img_name" value="">
               <div class="row">
                 <div class="form-group" style="width: 100%;">
                   <input type="text" class="input-block-level" name="reviewtitle" id="reviewtitle" value="${treview.reviewtitle}" placeholder="여행후기 제목 입력" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
@@ -75,7 +77,13 @@
                 <div class="form-group" style="width: 100%;">
                   <textarea class="input-block-level" id="reviewcontent" name="reviewcontent" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="여행후기 내용 입력">${treview.reviewcontent}</textarea>
                   <div class="validation"></div>
-                  <input type="file" name="imageFile" accept=".gif, .jpg, .jpeg, .png">
+                  	<input type="file" name="imageFile" accept=".gif, .jpg, .jpeg, .png" style="display: none;">
+                  	<div>
+                  		<c:if test="${not empty treview.img_path}">
+                  			<c:set var="prevImgPath" value="/index.php?histImg=${treview.img_name}" />
+                  		</c:if>
+                  		<iframe id="iFrameUpload" src="http://hlupload.yjoon.com/upload${prevImgPath}" style="display: block; border: none; overflow-x: hidden; overflow-y: hidden; width: 300px; height: 250px;"></iframe>
+                  	</div>
                   <c:if test="${not empty authUser}">
                   <div class="text-center">
                     <button class="btn btn-theme" type="button" onclick="javascript: save();">저장</button>
@@ -118,6 +126,11 @@
 			
 			$("#params").submit();
 		}
+		
+		window.addEventListener('message', function(e) {
+			$("#img_path").val(e.data.img_path);
+			$("#img_name").val(e.data.img_name);
+		});
 	</script>
 	<%@ include file="/WEB-INF/views/treview/inner/script.jsp"%>
 
