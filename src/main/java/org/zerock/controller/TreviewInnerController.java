@@ -62,7 +62,7 @@ public class TreviewInnerController {
 	 * @param params
 	 */
 	@GetMapping("/write")
-	public void write(@ModelAttribute("params") TreviewVO params, Model model) {
+	public void write(@ModelAttribute("params") TreviewVO params, Model model, HttpServletRequest request) {
 
 		log.info("[/treview/write] 여행후기 등록/수정 :: params >> " + ToStringBuilder.reflectionToString(params));
 
@@ -74,6 +74,12 @@ public class TreviewInnerController {
 
 		List<TreviewVO> orderlist = treviewService.selectOrderList();
 		model.addAttribute("orderlist", orderlist);
+
+		String url = javax.servlet.http.HttpUtils.getRequestURL(request).toString();
+		model.addAttribute("ssl", "http://");
+		if (url.indexOf("http://") > -1) {
+			model.addAttribute("ssl", "https://");
+		}
 
 	}
 
@@ -123,7 +129,7 @@ public class TreviewInnerController {
 	 * @param model
 	 */
 	@GetMapping("/view")
-	public void view(@ModelAttribute("params") TreviewVO params, Model model) {
+	public void view(@ModelAttribute("params") TreviewVO params, Model model, HttpServletRequest request) {
 
 		log.info("[/treview/view] 여행후기 상세보기 :: params >> " + ToStringBuilder.reflectionToString(params));
 
@@ -139,6 +145,12 @@ public class TreviewInnerController {
 
 		model.addAttribute("treview", treview);
 		model.addAttribute("replyList", replyList);
+
+		String url = javax.servlet.http.HttpUtils.getRequestURL(request).toString();
+		model.addAttribute("ssl", "http://");
+		if (url.indexOf("http://") > -1) {
+			model.addAttribute("ssl", "https://");
+		}
 
 	}
 

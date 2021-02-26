@@ -52,6 +52,11 @@ public class TreviewController {
 	 */
 	@GetMapping("/write")
 	public void write(@ModelAttribute("params") TreviewVO params, Model model, HttpServletRequest request) {
+		String url = javax.servlet.http.HttpUtils.getRequestURL(request).toString();
+		model.addAttribute("ssl", "http://");
+		if (url.indexOf("http://") > -1) {
+			model.addAttribute("ssl", "https://");
+		}
 		this.getParamSet(request, model);
 	}
 
@@ -102,6 +107,11 @@ public class TreviewController {
 	 */
 	@GetMapping("/view")
 	public void view(@ModelAttribute("params") TreviewVO params, Model model, HttpServletRequest request) {
+		String url = javax.servlet.http.HttpUtils.getRequestURL(request).toString();
+		model.addAttribute("ssl", "http://");
+		if (url.indexOf("http://") > -1) {
+			model.addAttribute("ssl", "https://");
+		}
 		this.getParamSet(request, model);
 	}
 

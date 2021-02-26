@@ -82,7 +82,7 @@
                   		<c:if test="${not empty treview.img_path}">
                   			<c:set var="prevImgPath" value="/index.php?histImg=${treview.img_name}" />
                   		</c:if>
-                  		<iframe id="iFrameUpload" src="http://hlupload.yjoon.com/upload${prevImgPath}" style="display: block; border: none; overflow-x: hidden; overflow-y: hidden; width: 300px; height: 250px;"></iframe>
+                  		<iframe id="iFrameUpload" src="${ssl}hlupload.yjoon.com/upload${prevImgPath}" style="display: block; border: none; overflow-x: hidden; overflow-y: hidden; width: 300px; height: 250px;"></iframe>
                   	</div>
                   <c:if test="${not empty authUser}">
                   <div class="text-center">
