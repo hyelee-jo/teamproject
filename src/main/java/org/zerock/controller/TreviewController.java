@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Enumeration;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,9 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.zerock.domain.MemberVO;
 import org.zerock.domain.TreviewVO;
 import org.zerock.service.TreviewService;
@@ -68,7 +64,7 @@ public class TreviewController {
 	 * @throws IOException
 	 */
 	@PostMapping("/writeSave")
-	public void writeSave(Model model, HttpServletResponse response, MultipartHttpServletRequest request, @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+	public void writeSave(Model model, HttpServletResponse response, HttpServletRequest request) throws IOException {
 
 		TreviewVO params = new TreviewVO();
 		params.setReviewno(request.getParameter("reviewno").isEmpty() ? 0 : Integer.parseInt(request.getParameter("reviewno").toString()));
@@ -81,21 +77,6 @@ public class TreviewController {
 		if (params.getId() == null) {
 			params.setId("newbie");
 		}
-
-//		if (imageFile != null && imageFile.getOriginalFilename() != null && !imageFile.getOriginalFilename().isEmpty()) {
-//			String ext = imageFile.getOriginalFilename().substring(imageFile.getOriginalFilename().lastIndexOf(".") + 1);
-//			File dir = new File(imagePath);
-//			System.out.println("dir.exists()::" + dir.exists());
-//			if (!new File(imagePath).exists()) {
-//				new File(imagePath).mkdirs();
-//			}
-//			String uuid = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
-//			String fullDir = imagePath + "/" + uuid + "." + ext;
-//			params.setImg_path(fullDir);
-//			params.setImg_key(uuid);
-//			params.setImg_name(uuid + "." + ext);
-//			imageFile.transferTo(new File(fullDir));
-//		}
 
 		log.info("[/treview/writeSave] 여행후기 등록/수정 :: params >> " + ToStringBuilder.reflectionToString(params));
 

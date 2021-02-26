@@ -56,7 +56,7 @@
             </div>
             <div id="sendmessage">Your message has been sent. Thank you!</div>
             <div id="errormessage"></div>
-            <form action="${root}/treview/writeSave" id="params" name="params" method="post" role="form" class="contactForm" enctype="multipart/form-data">
+            <form action="${root}/treview/writeSave" id="params" name="params" method="post" role="form" class="contactForm">
               <input type="hidden" id="reviewno" name="reviewno" value="${treview.reviewno}">
               <input type="hidden" id="id" name="id" value="${authUser.id}">
               <input type="hidden" id="img_path" name="img_path" value="">
