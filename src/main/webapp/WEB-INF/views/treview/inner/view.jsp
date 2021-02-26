@@ -59,7 +59,7 @@
               </div>
               <div class="clearfix">
               </div>
-              <img class="resizeImgTarget" src="${treview.img_path}" alt="" onError="this.onerror=$(this).hide();" style="width: 100%;" onload="resizeImgOnload(this);" />
+              <img class="resizeImgTarget" src="${ssl}${treview.img_path}" alt="" onError="this.onerror=$(this).hide();" style="width: 100%;" onload="resizeImgOnload(this);" />
               <ul class="post-meta">
                 <li class="first"><i class="icon-calendar"></i><span>${treview.reviewdatestr}</span></li>
                 <li><i class="icon-comments"></i><span><a href="#">${treview.cnt_reply} comments</a></span></li>

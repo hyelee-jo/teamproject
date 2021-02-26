@@ -42,7 +42,7 @@ public class TreviewInnerController {
 	 * @param model
 	 */
 	@GetMapping("/list")
-	public void list(@ModelAttribute("params") TreviewVO params, Model model) {
+	public void list(@ModelAttribute("params") TreviewVO params, Model model, HttpServletRequest request) {
 
 		log.info("[/treview/list] 여행후기 목록 :: params >> " + ToStringBuilder.reflectionToString(params));
 
@@ -53,6 +53,8 @@ public class TreviewInnerController {
 		params.setPage_rows(5);
 		List<TreviewVO> treviewList = treviewService.selectTreviewList(params);
 		model.addAttribute("treviewList", treviewList);
+
+		this.getFileUrl(request, model);
 
 	}
 
@@ -75,11 +77,7 @@ public class TreviewInnerController {
 		List<TreviewVO> orderlist = treviewService.selectOrderList();
 		model.addAttribute("orderlist", orderlist);
 
-		String url = javax.servlet.http.HttpUtils.getRequestURL(request).toString();
-		model.addAttribute("ssl", "http://");
-		if (url.indexOf("http://") > -1) {
-			model.addAttribute("ssl", "https://");
-		}
+		this.getFileUrl(request, model);
 
 	}
 
@@ -146,11 +144,7 @@ public class TreviewInnerController {
 		model.addAttribute("treview", treview);
 		model.addAttribute("replyList", replyList);
 
-		String url = javax.servlet.http.HttpUtils.getRequestURL(request).toString();
-		model.addAttribute("ssl", "http://");
-		if (url.indexOf("http://") > -1) {
-			model.addAttribute("ssl", "https://");
-		}
+		this.getFileUrl(request, model);
 
 	}
 
@@ -308,6 +302,14 @@ public class TreviewInnerController {
 			response.sendRedirect(request.getContextPath() + "/treview/message?message=/treview/tempLogin/logout&redirect=/treview/list");
 		}
 
+	}
+
+	private void getFileUrl(HttpServletRequest request, Model model) {
+		String url = javax.servlet.http.HttpUtils.getRequestURL(request).toString();
+		model.addAttribute("ssl", "http://hl.yjoon.com");
+		if (url.indexOf("http://") > -1) {
+			model.addAttribute("ssl", "https://hl.yjoon.com");
+		}
 	}
 
 }

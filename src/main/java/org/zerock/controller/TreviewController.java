@@ -43,6 +43,8 @@ public class TreviewController {
 	@GetMapping("/list")
 	public void list(@ModelAttribute("params") TreviewVO params, Model model, HttpServletRequest request) {
 		this.getParamSet(request, model);
+
+		this.getFileUrl(request, model);
 	}
 
 	/**
@@ -53,11 +55,13 @@ public class TreviewController {
 	@GetMapping("/write")
 	public void write(@ModelAttribute("params") TreviewVO params, Model model, HttpServletRequest request) {
 		String url = javax.servlet.http.HttpUtils.getRequestURL(request).toString();
-		model.addAttribute("ssl", "http://");
+		model.addAttribute("ssl", "http://hl.yjoon.com");
 		if (url.indexOf("http://") > -1) {
-			model.addAttribute("ssl", "https://");
+			model.addAttribute("ssl", "https://hl.yjoon.com");
 		}
 		this.getParamSet(request, model);
+
+		this.getFileUrl(request, model);
 	}
 
 	/**
@@ -113,6 +117,8 @@ public class TreviewController {
 			model.addAttribute("ssl", "https://");
 		}
 		this.getParamSet(request, model);
+
+		this.getFileUrl(request, model);
 	}
 
 	/**
@@ -269,6 +275,14 @@ public class TreviewController {
 			response.sendRedirect(request.getContextPath() + "/treview/message?message=/treview/tempLogin/logout&redirect=/treview/list");
 		}
 
+	}
+
+	private void getFileUrl(HttpServletRequest request, Model model) {
+		String url = javax.servlet.http.HttpUtils.getRequestURL(request).toString();
+		model.addAttribute("ssl", "http://hl.yjoon.com");
+		if (url.indexOf("http://") > -1) {
+			model.addAttribute("ssl", "https://hl.yjoon.com");
+		}
 	}
 
 }

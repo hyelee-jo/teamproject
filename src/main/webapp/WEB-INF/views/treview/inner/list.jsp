@@ -59,7 +59,7 @@
 	              <div class="span3">
 	                <div class="thumbnail">
 	                  <div class="image-wrapp">
-	                    <img class="listImgTag" src="${treview.img_path}" alt="Portfolio name" title="" class="location${treview.reviewno}" onError="this.onerror=null;this.src='${root}/resources/treview/assets/img/noimage.gif'" onload="resizeImgOnload(this);" />
+	                    <img class="listImgTag" src="${ssl}${treview.img_path}" alt="Portfolio name" title="" class="location${treview.reviewno}" onError="this.onerror=null;this.src='${root}/resources/treview/assets/img/noimage.gif'" onload="resizeImgOnload(this);" />
 	                    <article class="da-animate da-slideFromRight">
 	                      <a class="zoom" data-pretty="" href="javascript: detailImageView('${treview.reviewno}');">
 								<i class="icon-zoom-in icon-rounded icon-48 active"></i>
