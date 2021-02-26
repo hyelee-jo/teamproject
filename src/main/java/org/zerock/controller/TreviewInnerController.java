@@ -306,9 +306,9 @@ public class TreviewInnerController {
 
 	private void getFileUrl(HttpServletRequest request, Model model) {
 		String url = javax.servlet.http.HttpUtils.getRequestURL(request).toString();
-		model.addAttribute("ssl", "http://hl.yjoon.com");
+		model.addAttribute("ssl", "http://hlupload.yjoon.com");
 		if (url.indexOf("http://") > -1) {
-			model.addAttribute("ssl", "https://hl.yjoon.com");
+			model.addAttribute("ssl", "https://hlupload.yjoon.com");
 		}
 	}
 
